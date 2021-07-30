@@ -1,4 +1,5 @@
 from typing import Optional
+from datetime import datetime as dt
 
 from fastapi import FastAPI
 
@@ -7,7 +8,19 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    time = dt.now()
+    
+    with open('conexoes.log', 'r+') as logs:
+        for line in logs:
+            pass
+        idx, _ = line.split(': ') if line.strip() else ('0', '')
+        
+        logs.write(f"{int(idx)+1}: {time}\n")
+        
+    return {
+        "eae": "gay",
+        "n_acessos": int(idx) + 1
+    }
 
 
 @app.get("/items/{item_id}")
